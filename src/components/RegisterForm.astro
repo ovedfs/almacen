@@ -1,0 +1,57 @@
+
+
+<form id="form">
+  <div class="border rounded p-2 mb-4 flex flex-col">
+    <label for="input-nombre">Nombre:</label>
+    <input class="bg-slate-50 p-2 rounded outline-none" type="text" id="input-nombre" placeholder="Nombre del producto...">
+  </div>
+  <div class="border rounded p-2 mb-4 flex flex-col">
+    <label for="text-descripcion">Descripción:</label>
+    <textarea class="bg-slate-50 p-2 rounded outline-none" id="text-descripcion" rows="3" placeholder="Descripción del producto..."></textarea>
+  </div>
+  <div class="border rounded p-2 mb-4 flex flex-col">
+    <label for="input-precio">Precio:</label>
+    <input class="bg-slate-50 p-2 rounded outline-none text-end" type="number" id="input-precio" value="0">
+  </div>
+  <div class="border rounded p-2 mb-4 flex flex-col">
+    <label for="input-stock">Stock:</label>
+    <input class="bg-slate-50 p-2 rounded outline-none text-end" type="number" id="input-stock" value="0">
+  </div>
+  <div class="text-center">
+    <button id="btn-agregar" class="bg-purple-700 hover:bg-purple-900 text-white py-2 px-4 rounded-xl">Registrar</button>
+  </div>
+</form>
+
+<script>
+  const btnAgregar = document.getElementById('btn-agregar')
+  const inputNombre = document.getElementById('input-nombre')
+  const inputPrecio = document.getElementById('input-precio')
+  const inputStock = document.getElementById('input-stock')
+  const textDescripcion = document.getElementById('text-descripcion')
+  const form = document.getElementById('form')
+  console.log(JSON.parse(localStorage.getItem('productos')));
+  const productos = JSON.parse(localStorage.getItem('productos')) || []
+
+  btnAgregar.addEventListener('click', (e) => {
+    e.preventDefault()
+
+    if (inputNombre.value == '' || Number(inputPrecio.value) <= 0 || Number(inputStock.value) <= 0) {
+      alert('Debes ingresar los datos requeridos')
+      return
+    }
+
+    const producto = {
+      nombre: inputNombre.value,
+      descripcion: textDescripcion.value,
+      precio: inputPrecio.value,
+      stock: inputStock.value
+    }
+
+    productos.push(producto);
+
+    localStorage.setItem('productos', JSON.stringify(productos))
+
+    form.reset()
+    inputNombre.focus()
+  })
+</script>
